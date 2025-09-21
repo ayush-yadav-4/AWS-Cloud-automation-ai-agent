@@ -275,13 +275,13 @@ export async function POST(req: Request) {
     // Get user's AWS credentials
     await connectDB();
    
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.id) as unknown as { awsAccessKeyId: string, awsSecretAccessKey: string, awsRegion: string };
     if (!user) {
       return NextResponse.json(
         { error: 'User not found', message: 'Please log in again' },
         { status: 404 }
       );
-      );
+      
     }
 
     // Process the user's message and generate a response
